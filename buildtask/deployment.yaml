@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s-rex-demo
+  namespace: springboot-api-demo
+  labels:
+    name: k8s-rex-demo
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      name: k8s-rex-demo
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        name: k8s-rex-demo
+    spec:
+      containers:
+        - name: k8s-rex-demo
+          image: registry.cn-hangzhou.aliyuncs.com/westerncampus/rex-demo
+          ports:
+            - containerPort: 9999
+          imagePullPolicy: Always
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: k8s-rex-demo
+  namespace: springboot-api-demo
+spec:
+  #use NodePort can access from out side cluster: with ip+
+  type: NodePort
+  ports:
+    - port: 9999
+      targetPort: 9999
+  selector:
+    name: k8s-rex-demo

@@ -1,0 +1,2 @@
+docker tag registry.cn-hangzhou.aliyuncs.com/westerncampus/rex-demo registry.cn-hangzhou.aliyuncs.com/westerncampus/rex-demo:latest
+docker push registry.cn-hangzhou.aliyuncs.com/westerncampus/rex-demo:latest
